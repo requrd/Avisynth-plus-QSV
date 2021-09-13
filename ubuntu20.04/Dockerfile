@@ -91,7 +91,8 @@ RUN      buildDeps="autoconf \
                     python3-pip \
                     ninja-build \
                     libssl-dev \
-                    zlib1g-dev" && \
+                    zlib1g-dev \
+                    libfdk-aac-dev libva-dev libmfx-dev intel-media-va-driver-non-free" && \
         apt-get -yqq update && \
         apt-get install -yq --no-install-recommends ${buildDeps} && \
         pip3 install --upgrade pip setuptools && \
@@ -293,7 +294,7 @@ RUN  \
         DIR=/tmp/freetype && \
         mkdir -p ${DIR} && \
         cd ${DIR} && \
-        curl -sLO https://download.savannah.gnu.org/releases/freetype/freetype-${FREETYPE_VERSION}.tar.gz && \
+        curl -sLO https://download.savannah.gnu.org/releases/freetype/freetype-old/freetype-${FREETYPE_VERSION}.tar.gz && \
         echo ${FREETYPE_SHA256SUM} | sha256sum --check && \
         tar -zx --strip-components=1 -f freetype-${FREETYPE_VERSION}.tar.gz && \
         ./configure --prefix="${PREFIX}" --disable-static --enable-shared && \
@@ -588,7 +589,8 @@ RUN \
         --enable-libsrt \
         --enable-libaribb24 \
         --extra-cflags="-I${PREFIX}/include" \
-        --extra-ldflags="-L${PREFIX}/lib" && \
+        --extra-ldflags="-L${PREFIX}/lib" \
+        --enable-libmfx && \
         make && \
         make install && \
         make tools/zmqsend && cp tools/zmqsend ${PREFIX}/bin/ && \
