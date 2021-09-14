@@ -639,5 +639,11 @@ FROM        base AS release
 MAINTAINER  Tobitti <mail@tobitti.net>
 ENV         LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64:/usr/lib:/usr/lib64:/lib:/lib64
 COPY        --from=build /usr/local /usr/local
+# add qsv modules
+RUN apt -y install libva2 \
+        libva-drm2 \
+        intel-media-va-driver-non-free\
+        libmfx1 \
+        libva-x11-2
 CMD         ["--help"]
 ENTRYPOINT  ["ffmpeg"]
